@@ -9,7 +9,6 @@ public class AuthGetFrobRsp extends Rsp {
 	public String getFrob() {
 		return frob;
 	}
-
 	public void setFrob(String frob) {
 		this.frob = frob;
 	}

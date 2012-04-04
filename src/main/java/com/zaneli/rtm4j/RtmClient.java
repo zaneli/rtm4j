@@ -27,12 +27,18 @@ import com.zaneli.rtm4j.model.auth.AuthGetTokenRsp;
 import com.zaneli.rtm4j.model.auth.AuthGetTokenRspFactory;
 import com.zaneli.rtm4j.model.contacts.ContactsGetListRsp;
 import com.zaneli.rtm4j.model.contacts.ContactsGetListRspFactory;
+import com.zaneli.rtm4j.model.groups.GroupsGetListRsp;
+import com.zaneli.rtm4j.model.groups.GroupsGetListRspFactory;
+import com.zaneli.rtm4j.model.lists.ListsGetListRsp;
+import com.zaneli.rtm4j.model.lists.ListsGetListRspFactory;
 import com.zaneli.rtm4j.model.locations.LocationsGetListRsp;
 import com.zaneli.rtm4j.model.locations.LocationsGetListRspFactory;
 import com.zaneli.rtm4j.model.settings.SettingsGetListRsp;
 import com.zaneli.rtm4j.model.settings.SettingsGetListRspFactory;
 import com.zaneli.rtm4j.model.tasks.TasksGetListRsp;
 import com.zaneli.rtm4j.model.tasks.TasksGetListRspFactory;
+import com.zaneli.rtm4j.model.timezones.TimezonesGetListRsp;
+import com.zaneli.rtm4j.model.timezones.TimezonesGetListRspFactory;
 import com.zaneli.rtm4j.util.ParamsBuilder;
 
 public class RtmClient {
@@ -41,16 +47,22 @@ public class RtmClient {
 
 	private final Auth auth;
 	private final Contacts contacts;
+	private final Groups groups;
+	private final Lists lists;
 	private final Locations locations;
 	private final Settings settings;
 	private final Tasks tasks;
+	private final Timezones timezones;
 
 	public RtmClient(String apiKey, String sharedSecret) {
 		this.auth = new Auth(apiKey, sharedSecret);
 		this.contacts = new Contacts(apiKey, sharedSecret);
+		this.groups = new Groups(apiKey, sharedSecret);
+		this.lists = new Lists(apiKey, sharedSecret);
 		this.locations = new Locations(apiKey, sharedSecret);
 		this.settings = new Settings(apiKey, sharedSecret);
 		this.tasks = new Tasks(apiKey, sharedSecret);
+		this.timezones = new Timezones(apiKey, sharedSecret);
 	}
 
 	public Auth auth() {
@@ -58,6 +70,12 @@ public class RtmClient {
 	}
 	public Contacts contacts() {
 		return contacts;
+	}
+	public Groups groups() {
+		return groups;
+	}
+	public Lists lists() {
+		return lists;
 	}
 	public Locations locations() {
 		return locations;
@@ -67,6 +85,9 @@ public class RtmClient {
 	}
 	public Tasks tasks() {
 		return tasks;
+	}
+	public Timezones timezones() {
+		return timezones;
 	}
 
 	private static <T extends RspFactory<R>, R extends Rsp> R execute(
@@ -162,6 +183,30 @@ public class RtmClient {
 		}
 	}
 
+	public static class Groups extends Category {
+		private Groups(String apiKey, String sharedSecret) {
+			super(apiKey, sharedSecret, "groups");
+		}
+		public GroupsGetListRsp getList(String authToken) throws RtmException, IOException {
+			ParamsBuilder paramsBuilder =
+					new ParamsBuilder(getApiKey(), getSharedSecret(), getCategoryName(), "getList").setAuthToken(authToken);
+			HttpRequestBase request = createRequest(paramsBuilder.build());
+			return execute(request, GroupsGetListRspFactory.getInstance());
+		}
+	}
+
+	public static class Lists extends Category {
+		private Lists(String apiKey, String sharedSecret) {
+			super(apiKey, sharedSecret, "lists");
+		}
+		public ListsGetListRsp getList(String authToken) throws RtmException, IOException {
+			ParamsBuilder paramsBuilder =
+					new ParamsBuilder(getApiKey(), getSharedSecret(), getCategoryName(), "getList").setAuthToken(authToken);
+			HttpRequestBase request = createRequest(paramsBuilder.build());
+			return execute(request, ListsGetListRspFactory.getInstance());
+		}
+	}
+
 	public static class Locations extends Category {
 		private Locations(String apiKey, String sharedSecret) {
 			super(apiKey, sharedSecret, "locations");
@@ -195,6 +240,18 @@ public class RtmClient {
 					new ParamsBuilder(getApiKey(), getSharedSecret(), getCategoryName(), "getList").setAuthToken(authToken);
 			HttpRequestBase request = createRequest(paramsBuilder.build());
 			return execute(request, TasksGetListRspFactory.getInstance());
+		}
+	}
+
+	public static class Timezones extends Category {
+		private Timezones(String apiKey, String sharedSecret) {
+			super(apiKey, sharedSecret, "timezones");
+		}
+		public TimezonesGetListRsp getList(String authToken) throws RtmException, IOException {
+			ParamsBuilder paramsBuilder =
+					new ParamsBuilder(getApiKey(), getSharedSecret(), getCategoryName(), "getList").setAuthToken(authToken);
+			HttpRequestBase request = createRequest(paramsBuilder.build());
+			return execute(request, TimezonesGetListRspFactory.getInstance());
 		}
 	}
 }

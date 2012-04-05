@@ -1,6 +1,6 @@
 package com.zaneli.rtm4j;
 
-import com.zaneli.rtm4j.model.Rsp.Err;
+import com.zaneli.rtm4j.model.Err;
 
 @SuppressWarnings("serial")
 public class RtmException extends Exception {

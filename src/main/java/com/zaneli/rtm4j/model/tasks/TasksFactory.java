@@ -1,20 +1,17 @@
 package com.zaneli.rtm4j.model.tasks;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.commons.digester3.Digester;
-import org.xml.sax.SAXException;
 
-import com.zaneli.rtm4j.model.RspFactory;
+import com.zaneli.rtm4j.model.RspsFactory;
 
-public class TasksGetListRspFactory extends RspFactory<TasksGetListRsp> {
+public class TasksFactory extends RspsFactory<TaskInfo> {
 
-	private static TasksGetListRspFactory factory;
+	private static TasksFactory factory;
 
-	private TasksGetListRspFactory() {
-		super(TasksGetListRsp.class);
+	private TasksFactory() {
 		Digester digester = getDigester();
+		digester.addObjectCreate("rsp/tasks", TaskInfo.class);
+		digester.addSetNext("rsp/tasks", "addResponse");
 		digester.addSetProperties("rsp/tasks", "rev", "rev");
 		
 		digester.addObjectCreate("rsp/tasks/list", List.class);
@@ -57,14 +54,9 @@ public class TasksGetListRspFactory extends RspFactory<TasksGetListRsp> {
 		digester.addSetProperties("rsp/tasks/list/taskseries/task", "estimate", "estimate");
 	}
 
-	@Override
-	public TasksGetListRsp create(InputStream in) throws IOException, SAXException {
-		return getDigester().parse(in);
-	}
-
-	public static synchronized TasksGetListRspFactory getInstance() {
+	public static synchronized TasksFactory getInstance() {
 		if (factory == null) {
-			factory = new TasksGetListRspFactory();
+			factory = new TasksFactory();
 		}
 		return factory;
 	}

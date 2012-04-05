@@ -1,20 +1,17 @@
 package com.zaneli.rtm4j.model.auth;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.commons.digester3.Digester;
-import org.xml.sax.SAXException;
 
 import com.zaneli.rtm4j.model.RspFactory;
 
-public class AuthGetTokenRspFactory extends RspFactory<AuthGetTokenRsp> {
+public class TokenFactory extends RspFactory<TokenInfo> {
 
-	private static AuthGetTokenRspFactory factory;
+	private static TokenFactory factory;
 
-	private AuthGetTokenRspFactory() {
-		super(AuthGetTokenRsp.class);
+	private TokenFactory() {
 		Digester digester = getDigester();
+		getDigester().addObjectCreate("rsp/auth", TokenInfo.class);
+		getDigester().addSetNext("rsp/auth", "setResponse");
 		digester.addBeanPropertySetter("rsp/auth/token");
 		digester.addBeanPropertySetter("rsp/auth/perms");
 		digester.addSetProperties("rsp/auth/user", "id", "id");
@@ -22,14 +19,9 @@ public class AuthGetTokenRspFactory extends RspFactory<AuthGetTokenRsp> {
 		digester.addSetProperties("rsp/auth/user", "fullname", "fullname");
 	}
 
-	@Override
-	public AuthGetTokenRsp create(InputStream in) throws IOException, SAXException {
-		return getDigester().parse(in);
-	}
-
-	public static synchronized AuthGetTokenRspFactory getInstance() {
+	public static synchronized TokenFactory getInstance() {
 		if (factory == null) {
-			factory = new AuthGetTokenRspFactory();
+			factory = new TokenFactory();
 		}
 		return factory;
 	}

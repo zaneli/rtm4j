@@ -1,17 +1,30 @@
-package com.zaneli.rtm4j.model.contacts;
+package com.zaneli.rtm4j.model.groups;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.zaneli.rtm4j.model.Model;
-import com.zaneli.rtm4j.model.Rsp;
 
-public class ContactsGetListRsp extends Rsp {
+public class GroupInfo extends Model {
 
+	private String id;
+	private String name;
 	private List<Contact> contacts;
 
-	public ContactsGetListRsp() {
+	public GroupInfo() {
 		contacts = new ArrayList<Contact>();
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public Contact[] getContacts() {
 		return contacts.toArray(new Contact[contacts.size()]);
@@ -22,26 +35,12 @@ public class ContactsGetListRsp extends Rsp {
 
 	public static class Contact extends Model {
 		private String id;
-		private String fullname;
-		private String username;
 
 		public String getId() {
 			return id;
 		}
 		public void setId(String id) {
 			this.id = id;
-		}
-		public String getFullname() {
-			return fullname;
-		}
-		public void setFullname(String fullname) {
-			this.fullname = fullname;
-		}
-		public String getUsername() {
-			return username;
-		}
-		public void setUsername(String username) {
-			this.username = username;
 		}
 	}
 }

@@ -1,8 +1,8 @@
 package com.zaneli.rtm4j.model.auth;
 
-import com.zaneli.rtm4j.model.Rsp;
+import com.zaneli.rtm4j.model.Model;
 
-public class AuthGetTokenRsp extends Rsp {
+public class TokenInfo extends Model {
 
 	private String token;
 	private String perms;

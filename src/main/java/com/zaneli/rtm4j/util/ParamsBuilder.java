@@ -17,34 +17,99 @@ public class ParamsBuilder {
 	private static final String KEY_FROB = "frob";
 	private static final String KEY_AUTH_TOKEN = "auth_token";
 	private static final String KEY_API_SIG = "api_sig";
+	private static final String KEY_TIMELINE = "timeline";
+	private static final String KEY_CONTACT = "contact";
+	private static final String KEY_CONTACT_ID = "contact_id";
+	private static final String KEY_GROUP = "group";
+	private static final String KEY_GROUP_ID = "group_id";
+	private static final String KEY_NAME = "name";
+	private static final String KEY_FILTER = "filter";
+	private static final String KEY_LIST_ID = "list_id";
+	private static final String KEY_TRANSACTION_ID = "transaction_id";
 
 	private final Map<String, String> params;
 
 	private final String sharedSecret;
-
-	public ParamsBuilder(String apiKey, String sharedSecret, String categoryName, String methodName) {
-		this(apiKey, sharedSecret);
-		params.put(KEY_METHOD, "rtm." + categoryName + "." + methodName);
-	}
 
 	public ParamsBuilder(String apiKey, String sharedSecret) {
 		this.sharedSecret = sharedSecret;
 		params = new HashMap<String, String>();
 		params.put(KEY_API_KEY, apiKey);
 	}
+	public ParamsBuilder(String apiKey, String sharedSecret, String categoryName, String methodName) {
+		this(apiKey, sharedSecret);
+		params.put(KEY_METHOD, "rtm." + categoryName + "." + methodName);
+	}
+	public ParamsBuilder(
+			String apiKey, String sharedSecret, String categoryName, String methodName, String authToken) {
+		this(apiKey, sharedSecret, categoryName, methodName);
+		params.put(KEY_AUTH_TOKEN, authToken);
+	}
 
 	public ParamsBuilder setPerms(String perms) {
-		params.put(KEY_PERMS, perms);
+		if (perms != null) {
+			params.put(KEY_PERMS, perms);
+		}
 		return this;
 	}
-
 	public ParamsBuilder setFrob(String frob) {
-		params.put(KEY_FROB, frob);
+		if (frob != null) {
+			params.put(KEY_FROB, frob);
+		}
 		return this;
 	}
-
-	public ParamsBuilder setAuthToken(String authToken) {
-		params.put(KEY_AUTH_TOKEN, authToken);
+	public ParamsBuilder setTimeline(String timeline) {
+		if (timeline != null) {
+			params.put(KEY_TIMELINE, timeline);
+		}
+		return this;
+	}
+	public ParamsBuilder setContact(String contact) {
+		if (contact != null) {
+			params.put(KEY_CONTACT, contact);
+		}
+		return this;
+	}
+	public ParamsBuilder setContactId(String contactId) {
+		if (contactId != null) {
+			params.put(KEY_CONTACT_ID, contactId);
+		}
+		return this;
+	}
+	public ParamsBuilder setGroup(String group) {
+		if (group != null) {
+			params.put(KEY_GROUP, group);
+		}
+		return this;
+	}
+	public ParamsBuilder setGroupId(String groupId) {
+		if (groupId != null) {
+			params.put(KEY_GROUP_ID, groupId);
+		}
+		return this;
+	}
+	public ParamsBuilder setName(String name) {
+		if (name != null) {
+			params.put(KEY_NAME, name);
+		}
+		return this;
+	}
+	public ParamsBuilder setFilter(String filter) {
+		if (filter != null) {
+			params.put(KEY_FILTER, filter);
+		}
+		return this;
+	}
+	public ParamsBuilder setListId(String listId) {
+		if (listId != null) {
+			params.put(KEY_LIST_ID, listId);
+		}
+		return this;
+	}
+	public ParamsBuilder setTransactionId(String transactionId) {
+		if (transactionId != null) {
+			params.put(KEY_TRANSACTION_ID, transactionId);
+		}
 		return this;
 	}
 

@@ -17,15 +17,12 @@ public class List extends Model {
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	public Taskseries[] getTaskseries() {
 		return taskseriesList.toArray(new Taskseries[taskseriesList.size()]);
 	}
-
 	public void addTaskseries(Taskseries taskseries) {
 		taskseriesList.add(taskseries);
 	}

@@ -3,28 +3,20 @@ package com.zaneli.rtm4j.model;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.digester3.Digester;
 import org.xml.sax.SAXException;
 
-public abstract class RspsFactory<T extends Model> {
+import com.zaneli.rtm4j.RtmException;
 
-	private final Digester digester;
+public abstract class RspsFactory<T extends Model> extends ResultFactory {
 
 	protected RspsFactory() {
-		digester = new Digester();
-		digester.addObjectCreate("rsp", Rsps.class);
-		digester.addSetProperties("rsp", "stat", "stat");
-		digester.addObjectCreate("rsp/err", Err.class);
-		digester.addSetNext("rsp/err", "setErr");
-		digester.addSetProperties("rsp/err", "code", "code");
-		digester.addSetProperties("rsp/err", "msg", "msg");
+		super(Rsps.class);
 	}
 
-	public Rsps<T> create(InputStream in) throws IOException, SAXException {
-		return getDigester().parse(in);
-	}
-
-	protected Digester getDigester() {
-		return digester;
+	@Override
+	public Rsps<T> create(InputStream in) throws IOException, SAXException, RtmException {
+		Rsps<T> rsps = getDigester().parse(in);
+		checkStatus(rsps);
+		return rsps;
 	}
 }
